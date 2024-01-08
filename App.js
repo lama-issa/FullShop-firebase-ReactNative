@@ -14,8 +14,10 @@ import ordersReducer from "./store/reducers/orders";
 import NavCont from "./navigation/NavCont";
 import ReduxThunk from "redux-thunk";
 import { NavigationContainer } from "@react-navigation/native";
-// import languageReducer from "./store/reducers/languageReducer";
-// import LanguageDropdown from "./components/shop/LanguageDropdown";
+import languageReducer from "./store/reducers/languageReducer";
+import LanguageDropdown from "./components/shop/LanguageDropdown";
+
+
 // import * as Notifications from 'expo-notifications';
 
 // Notifications.setNotificationHandler({
@@ -36,7 +38,7 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   orders: ordersReducer,
   auth: authReducer, // to access to token
-  // language: languageReducer,
+  language: languageReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
@@ -64,7 +66,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        {/* <LanguageDropdown />  */}
+        <LanguageDropdown /> 
         <NavCont />
       </NavigationContainer>
     </Provider>

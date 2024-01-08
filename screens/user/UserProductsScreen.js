@@ -6,12 +6,14 @@ import { useNavigation } from "@react-navigation/native";
 import HeaderButton from "../../components/UI/HeaderButton";
 import * as productsActions from "../../store/actions/products";
 import ProductList from "../../components/UI/ProductList";
+import { useTranslation } from 'react-i18next';
 
 
 const UserProductsScreen = () => {
   const userProducts = useSelector((state) => state.products.userProducts);
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   const editProductHandler = (id) => {
     navigation.navigate("Admin", {
@@ -35,7 +37,7 @@ const UserProductsScreen = () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: "Your Products",
+      headerTitle: t('Your Products'),
       headerLeft: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
@@ -62,7 +64,7 @@ const UserProductsScreen = () => {
         </HeaderButtons>
       ),
     });
-  }, [navigation]);
+  }, [navigation,t]);
 
   if (userProducts.length === 0) {
     return (
@@ -77,8 +79,8 @@ const UserProductsScreen = () => {
     data={userProducts}
     onSelect={(id) => editProductHandler(id)}
     buttonConfig={[
-      { title: "Edit", handler: (item) => editProductHandler(item.id) },
-      { title: "Delete", handler: (item) => deleteHandler(item.id) },
+      { title: t('Edit'), handler: (item) => editProductHandler(item.id) },
+      { title: t('Delete'), handler: (item) => deleteHandler(item.id) },
     ]}
   />
     // <FlatList

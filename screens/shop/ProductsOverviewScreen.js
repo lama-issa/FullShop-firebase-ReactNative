@@ -195,6 +195,8 @@ import Colors from "../../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 import * as productsActions from "../../store/actions/products";
 import ProductList from "../../components/UI/ProductList";
+import { useTranslation } from 'react-i18next'; 
+
 
 const ProductsOverviewScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -206,6 +208,8 @@ const ProductsOverviewScreen = (props) => {
   const products = useSelector((state) => state.products.availableProducts);
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+
 
   const loadProducts = useCallback(async () => {
     setError(null);
@@ -240,7 +244,7 @@ const ProductsOverviewScreen = (props) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: "All Products",
+      headerTitle: t('All Products'),
       headerLeft: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
@@ -268,7 +272,7 @@ const ProductsOverviewScreen = (props) => {
         </HeaderButtons>
       ),
     });
-  }, [navigation, cartItemsCount]);
+  }, [navigation, cartItemsCount,t]);
 
   const selectItemHandler = (id, title) => {
     navigation.navigate("ProductDetail", {
@@ -317,8 +321,9 @@ const ProductsOverviewScreen = (props) => {
           data={[itemData.item]}
           onSelect={(id, title) => selectItemHandler(id, title)}
           buttonConfig={[
-            { title: "View Details", handler: (item) => selectItemHandler(item.id, item.title) },
-            { title: "To Cart", handler: (item) => dispatch(cartActions.addToCart(item)) },
+            // label={t('logout')}
+            { title:t('View Details'), handler: (item) => selectItemHandler(item.id, item.title) },
+            {  title: t('To Cart'), handler: (item) => dispatch(cartActions.addToCart(item)) },
           ]}
         />
       )}

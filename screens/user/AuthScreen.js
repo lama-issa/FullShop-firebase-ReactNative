@@ -17,6 +17,8 @@ import Input from '../../components/UI/Input';
 import Card from '../../components/UI/Card';
 import Colors from '../../constants/Colors';
 import * as authActions from '../../store/actions/auth';
+import { useTranslation } from 'react-i18next';
+
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
@@ -49,6 +51,7 @@ const AuthScreen = (props) => {
   const [isSignup, setIsSignup] = useState(false);
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
@@ -64,10 +67,10 @@ const AuthScreen = (props) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: 'Authenticate',
+      headerTitle: t('Authenticate'),
     });
-  }, [navigation]);
-
+  }, [navigation, t]);
+  
   useEffect(() => {
     if (error) {
       Alert.alert('An Error Occurred!', error, [{ text: 'Okay' }]);
@@ -111,7 +114,7 @@ const AuthScreen = (props) => {
           <ScrollView>
             <Input
               id="email"
-              label="E-Mail"
+              label={t('Email')}
               keyboardType="email-address"
               required
               email
@@ -122,7 +125,7 @@ const AuthScreen = (props) => {
             />
             <Input
               id="password"
-              label="Password"
+              label={t('Password')}
               keyboardType="default"
               secureTextEntry
               required
@@ -136,12 +139,12 @@ const AuthScreen = (props) => {
               {isLoading ? (
                 <ActivityIndicator size="small" color={Colors.primary} />
               ) : (
-                <Button title={isSignup ? 'Sign Up' : 'Login'} color={Colors.primary} onPress={authHandler} />
+                <Button title={isSignup ? t('Sign Up') : t('Login')} color={Colors.primary} onPress={authHandler} />
               )}
             </View>
             <View style={styles.buttonContainer}>
               <Button
-                title={`Switch to ${isSignup ? 'Login' : 'Sign Up'}`}
+               title={`${t('Switch to')} ${isSignup ? t('Login') : t('Sign Up')}`}
                 color={Colors.accent}
                 onPress={() => {
                   setIsSignup((prevState) => !prevState);

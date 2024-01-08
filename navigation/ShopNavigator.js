@@ -16,6 +16,8 @@ import AuthScreen from '../screens/user/AuthScreen';
 import StartupScreen from '../screens/StartupScreen';
 import Colors from '../constants/Colors';
 import * as authActions from '../store/actions/auth';
+import { useTranslation } from 'react-i18next'; 
+
 
 const defaultNavOptions = {
   headerStyle: {
@@ -88,13 +90,14 @@ const AdminNavigator = () => {
 const ShopNavigator = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   const CustomDrawerContent = (props) => {
     return (
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
         <DrawerItem
-          label="Logout"
+           label={t('logout')}
           onPress={() => {
             dispatch(authActions.logout());
             // navigation.navigate('Auth');
@@ -114,9 +117,9 @@ const ShopNavigator = () => {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
      
     >
-      <Drawer.Screen name="Products" component={ProductsNavigator} />
-      <Drawer.Screen name="Orders" component={OrdersNavigator} />
-      <Drawer.Screen name="Admin" component={AdminNavigator} />
+      <Drawer.Screen name="Products" component={ProductsNavigator} options={{ drawerLabel: t('product') }} />
+      <Drawer.Screen name="Orders" component={OrdersNavigator} options={{ drawerLabel: t('order') }} />
+      <Drawer.Screen name="Admin" component={AdminNavigator} options={{ drawerLabel: t('admin') }} />
     </Drawer.Navigator>
   );
 };
